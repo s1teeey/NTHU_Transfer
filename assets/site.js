@@ -163,9 +163,13 @@ function loadContent(){
   const KEY="content:"+CONTENT_TAB;let cached=null;
   try{cached=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
   if(cached)applyContent(cached);
-  const url="https://docs.google.com/spreadsheets/d/"+CONTENT_SHEET+"/gviz/tq?tqx=out:csv&headers=1&sheet="+encodeURIComponent(CONTENT_TAB)+"&tq="+encodeURIComponent("select D,E");
+  const url="https://docs.google.com/spreadsheets/d/"+CONTENT_SHEET+"/gviz/tq?tqx=out:csv&headers=1&sheet="+encodeURIComponent(CONTENT_TAB);
   fetch(url).then(r=>r.ok?r.text():Promise.reject()).then(t=>{
-    const map={};parseCSV(t).slice(1).forEach(([v,k])=>{k=(k||"").trim();if(k&&v&&v.trim())map[k]=v});
+    /* 依標題找欄位：「修改後」和「key」可以放在任何一欄 */
+    const rows=parseCSV(t),head=(rows[0]||[]).map(h=>h.trim().toLowerCase());
+    const vi=head.findIndex(h=>h.includes("修改後")),ki=head.findIndex(h=>h==="key"||h.includes("key"));
+    if(vi<0||ki<0)return;
+    const map={};rows.slice(1).forEach(r=>{const k=(r[ki]||"").trim(),v=r[vi]||"";if(k&&v.trim())map[k]=v});
     try{localStorage.setItem(KEY,JSON.stringify(map))}catch(e){}
     if(JSON.stringify(map)!==JSON.stringify(cached))applyContent(map);
   }).catch(()=>{});
