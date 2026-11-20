@@ -209,4 +209,25 @@ main h2,.src-year,.src-past,.faq-group{scroll-margin-top:84px}
 .lidx a.on{color:var(--ink);font-weight:800;border-left-color:var(--accent)}
 .lidx a.on .n{color:var(--accent-ink)}
 .lidx a[hidden]{display:none}
-@media (max-width:1439px){.lidx{display:none}}
+@media (max-width:1439px){
+  .lidx{left:20px;width:150px}
+  body:has(.lidx) main.wrap{margin-left:196px;margin-right:max(20px,calc(100vw - 1276px));max-width:none}
+}
+@media (max-width:1199px){.lidx{display:none}body:has(.lidx) main.wrap{margin:0 auto;max-width:1080px}}
+
+/* 螢光筆四色（後台可用）：紫＝預設 mark、紅 r、綠 g、灰 k */
+mark.r{background:linear-gradient(transparent 55%,rgba(214,38,72,.22) 55%)}
+mark.g{background:linear-gradient(transparent 55%,rgba(22,160,138,.26) 55%)}
+mark.k{background:linear-gradient(transparent 55%,rgba(120,122,138,.24) 55%)}
+:root[data-theme="dark"] mark.r{background:linear-gradient(transparent 55%,rgba(240,100,130,.38) 55%)}
+:root[data-theme="dark"] mark.g{background:linear-gradient(transparent 55%,rgba(95,211,188,.32) 55%)}
+:root[data-theme="dark"] mark.k{background:linear-gradient(transparent 55%,rgba(161,164,181,.30) 55%)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) mark.r{background:linear-gradient(transparent 55%,rgba(240,100,130,.38) 55%)}
+  :root:not([data-theme="light"]) mark.g{background:linear-gradient(transparent 55%,rgba(95,211,188,.32) 55%)}
+  :root:not([data-theme="light"]) mark.k{background:linear-gradient(transparent 55%,rgba(161,164,181,.30) 55%)}
+}
+h4{font-size:16px;font-weight:800;margin:0}
+.prose h4{margin-top:6px}
+figure.shot img{display:block;max-width:100%;height:auto;border:1px solid var(--line)}
+.prose figure.shot{margin:10px 0}
