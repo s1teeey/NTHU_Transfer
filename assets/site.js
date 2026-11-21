@@ -76,7 +76,7 @@ function buildRail(){
   if(!rail){rail=document.createElement("nav");rail.className="rail";rail.setAttribute("aria-label","本頁段落");document.body.appendChild(rail)}
   let items=[];
   const label=e=>{
-    const c=e.cloneNode(true);c.querySelectorAll(".today").forEach(x=>x.remove());
+    const c=e.cloneNode(true);c.querySelectorAll(".today,small").forEach(x=>x.remove());
     const no=c.querySelector(".no");if(no)no.textContent=no.textContent+" ";
     let t=c.textContent.replace(/\s+/g," ").trim();
     if(e.matches(".src-year > .yr"))t+=" 學年度心得";
@@ -123,7 +123,8 @@ function buildIndex(){
     const sec=h.closest("section")||h;
     const a=document.createElement("a");a.href=sec.id?"#"+sec.id:"#";
     const no=h.querySelector(".no").textContent.trim();
-    const t=h.textContent.replace(no,"").replace(/\s+/g," ").trim();
+    const hc=h.cloneNode(true);hc.querySelectorAll("small").forEach(x=>x.remove());
+    const t=hc.textContent.replace(no,"").replace(/\s+/g," ").trim();
     a.innerHTML='<span class="n">'+no+'</span><span class="t"></span>';a.querySelector(".t").textContent=t;
     a.onclick=e=>{e.preventDefault();sec.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})};
     nav.appendChild(a);return [sec,a];
@@ -136,5 +137,5 @@ function buildIndex(){
     links.forEach(([sec,a])=>{a.hidden=sec.offsetParent===null});
   };
   addEventListener("scroll",mark,{passive:true});addEventListener("resize",mark);mark();
-  addEventListener("content",()=>links.forEach(([sec,a],i)=>{const h=heads[i],no=h.querySelector(".no").textContent.trim();a.querySelector(".t").textContent=h.textContent.replace(no,"").replace(/\s+/g," ").trim()}));
+  addEventListener("content",()=>links.forEach(([sec,a],i)=>{const h=heads[i],no=h.querySelector(".no").textContent.trim();const hc=h.cloneNode(true);hc.querySelectorAll("small").forEach(x=>x.remove());a.querySelector(".t").textContent=hc.textContent.replace(no,"").replace(/\s+/g," ").trim()}));
 }
