@@ -235,3 +235,10 @@ figure.shot img{display:block;max-width:100%;height:auto;border:1px solid var(--
 /* 小字：標題旁的補充說明（後台「小字」按鈕） */
 h1 small,h2 small,h3 small,h4 small{font-size:14px;font-weight:600;color:var(--muted);margin-left:10px;letter-spacing:0}
 small{color:var(--muted)}
+
+/* 並排（後台「並排」按鈕）：清單橫排、或兩個以上區塊並排；手機自動變直排 */
+.prose ol.row,.prose ul.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 32px}
+.prose ol.keys.row li{border-left:2px solid var(--line);padding-left:44px}
+.prose ol.keys.row li::before{left:14px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 40px;align-items:start}
+.cols>*{margin:0}
